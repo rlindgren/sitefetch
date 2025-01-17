@@ -45,13 +45,17 @@ class Fetcher {
       }`
     )
 
-    await this.#fetchPage(url, {
-      skipMatch: true,
-    })
+    try {
+      await this.#fetchPage(url, {
+        skipMatch: true,
+      })
 
-    await this.#queue.onIdle()
+      await this.#queue.onIdle()
 
-    return this.#pages
+      return this.#pages
+    } catch(err) {
+      logger.warn('Error: fetching page', err);
+    }
   }
 
   async #fetchPage(
